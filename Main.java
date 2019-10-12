@@ -9,26 +9,30 @@ import static TSP.Input.DataSet.*;
 public class Main {
 
     public static void main(String[] args) {
-        // Create cities
-        int numStops = 0;
-        int popsize;
-        int generation;
-        int crossover_percentage;
-        boolean is_SCX;
-        int mutation_percentage;
-        int mutation_limit;
-        boolean isCostDistance;
-        //GeneticAlgorithm ga = new GeneticAlgorithm();
+
         Input in = new Input();
         Chromosome chr = new Chromosome(in.getCities(burma14),new Random());
-        System.out.println(Arrays.toString(in.getCities(burma14)));
+        /*Chromosome twoChr = new Chromosome(chr);
+        Chromosome threeChr = new Chromosome(twoChr);
+        Chromosome fourChr = new Chromosome(threeChr);
+        Chromosome fifthChr = new Chromosome(fourChr);
         System.out.println(Arrays.toString(chr.getArray()));
+        System.out.println(Arrays.toString(twoChr.getArray()));
+        System.out.println(Arrays.toString(threeChr.getArray()));
+        System.out.println(Arrays.toString(fourChr.getArray()));
+        System.out.println(Arrays.toString(fifthChr.getArray()));
 
 
-        Population pop = new Population(10);
+        pop.add(chr);
+        pop.add(twoChr);
+        pop.add(threeChr);
+        pop.add(fourChr);
+        pop.add(fifthChr);*/
+        Population pop = new Population(5);
         for (int i = 0; i < 10; i++) {
             pop.add(new Chromosome(in.getCities(burma14),new Random()));
         }
         System.out.println(pop.toString());
+
     }
 }
