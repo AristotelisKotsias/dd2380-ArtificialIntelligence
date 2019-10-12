@@ -1,7 +1,4 @@
-//package TSP;
-
-
-
+package TSP;
 
 import java.util.Random;
 

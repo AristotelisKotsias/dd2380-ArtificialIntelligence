@@ -1,3 +1,4 @@
+package TSP;
 import java.io.*;
 
 public class Input {
@@ -13,11 +14,17 @@ public class Input {
         int startingLine;
 
         // Determine which data set to load up and set the properties pertaining to it.
-        if (dataSet == DataSet.bays29) {
+        if (dataSet == DataSet.burma14) {
+            dataSetName = "burma14.tsp";
+            startingLine = 8;
+        } else if (dataSet == DataSet.bays29) {
             dataSetName = "bays29.tsp";
             startingLine = 38;
-        } else {
+        } else if (dataSet == DataSet.att48) {
             dataSetName = "att48.tsp";
+            startingLine = 6;
+        } else {
+            dataSetName = "berlin52.tsp";
             startingLine = 6;
         }
 
@@ -29,8 +36,8 @@ public class Input {
         // Read each line and turn it into a City.
         for (int i = startingLine; i < startingLine+numOfCities; i++) {
             String[] line = removeWhiteSpace(lines[i]).trim().split(" ");
-            int x = (int)Double.parseDouble(line[1].trim());
-            int y = (int)Double.parseDouble(line[2].trim());
+            int x = (int)Math.round(Double.parseDouble(line[1].trim()));
+            int y = (int)Math.round(Double.parseDouble(line[2].trim()));
             City city = new City(line[0], x, y);
             cities[i-startingLine] = city;
         }
@@ -71,8 +78,10 @@ public class Input {
     }
 
     public enum DataSet {
+        burma14,
         att48,
-        bays29
+        bays29,
+        berlin52
     }
 
 
