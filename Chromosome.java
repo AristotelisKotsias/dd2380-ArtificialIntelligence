@@ -7,7 +7,7 @@ public class Chromosome implements Comparable<Chromosome> {
     private int distance = -1; // Calculated once then cached.
     private Random random;
 
-    /*public Chromosome(Chromosome chr) {
+    public Chromosome(Chromosome chr) {
         City [] temp = chr.cities;
         City last = temp[temp.length -1];
         this.cities = new City[temp.length];
@@ -17,7 +17,7 @@ public class Chromosome implements Comparable<Chromosome> {
             this.cities[j] = temp[i];
             j++;
         }
-    }*/
+    }
     public Chromosome (City[] cities) {
         this.cities = cities.clone();
     }
@@ -34,7 +34,17 @@ public class Chromosome implements Comparable<Chromosome> {
     public Chromosome (City[] cities, Random random) {
         this.cities = cities.clone();
         this.random = random;
-        shuffle();
+        shuffle1();
+    }
+
+
+    /**
+     * Shuffles the cities in the Chromosome.
+     */
+    private void shuffle1 () {
+        for (int i = 1; i < cities.length; i++) {
+            swap(i, random.nextInt(cities.length-1)+1);
+        }
     }
 
     /**

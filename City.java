@@ -11,6 +11,10 @@ public class City {
     private String name;
     private int x, y;
 
+
+    public City(){
+
+    }
     /**
      * Constructs the City.
      * @param name  the name of the city

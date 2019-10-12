@@ -12,8 +12,8 @@ public class Main {
 
         Input in = new Input();
         Chromosome chr = new Chromosome(in.getCities(burma14),new Random());
-        /*Chromosome twoChr = new Chromosome(chr);
-        Chromosome threeChr = new Chromosome(twoChr);
+        Chromosome twoChr = new Chromosome(chr);
+        /*Chromosome threeChr = new Chromosome(twoChr);
         Chromosome fourChr = new Chromosome(threeChr);
         Chromosome fifthChr = new Chromosome(fourChr);
         System.out.println(Arrays.toString(chr.getArray()));
@@ -28,7 +28,11 @@ public class Main {
         pop.add(threeChr);
         pop.add(fourChr);
         pop.add(fifthChr);*/
-        Population pop = new Population(5);
+        Population pop = new Population(10);
+        Crossover cr = new Crossover();
+
+        cr.scx(chr,twoChr, in.getCities(burma14));
+
         for (int i = 0; i < 10; i++) {
             pop.add(new Chromosome(in.getCities(burma14),new Random()));
         }
