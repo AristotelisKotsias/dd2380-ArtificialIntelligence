@@ -1,95 +1,83 @@
 package TSP;
+
 import java.util.*;
+
 public class Crossover {
 
-    /**
-     * Performs a crossover on all the cities between two points.
-     * @param p1    the first parent chromosome
-     * @param p2    the second parent chromosome
-     * @param r     the Random object for selecting a point
-     * @return      the children
-     */
-    static ArrayList<Chromosome> orderCrossover (Chromosome p1, Chromosome p2, Random r) {
-        City[] parent1 = p1.getArray();
-        City[] parent2 = p2.getArray();
+    City[] parent1;
+    City[] parent2;
+    City[] child;
+    int len;
+    static ArrayList<City> citiesNotInChild;
 
-        City[] child1 = new City[parent1.length];
-        City[] child2 = new City[parent2.length];
+    public Chromosome scx(Chromosome p1, Chromosome p2) {
+        parent1 = p1.getArray();
+        parent2 = p2.getArray();
+        len = parent1.length;
+        child = new City[len];
 
-        HashSet<City> citiesInChild1 = new HashSet<>();
-        HashSet<City> citiesInChild2 = new HashSet<>();
+        int legitimate_city1;
+        int legitimate_city2;
 
-        ArrayList<City> citiesNotInChild1 = new ArrayList<>();
-        ArrayList<City> citiesNotInChild2 = new ArrayList<>();
+        int parent1_pos = newParentPosition(parent1, 1);
+        int parent2_pos = newParentPosition(parent2, 1);
 
-        ArrayList<Chromosome> children = new ArrayList<>();
-        int totalCities = parent1.length;
+        child[0] = parent1[parent1_pos];
+        citiesNotInChild.remove(0);
 
-        int firstPoint = r.nextInt(totalCities);
-        int secondPoint = r.nextInt(totalCities - firstPoint) + firstPoint;
+        //System.out.println(citiesNotInChild.toString());
 
-        // Inherit the cities before and after the points selected.
-        for (int i = 0; i < firstPoint; i++) {
-            child1[i] = parent1[i];
-            child2[i] = parent2[i];
-            citiesInChild1.add(parent1[i]);
-            citiesInChild2.add(parent2[i]);
-        }
-        for (int i = secondPoint; i < totalCities; i++) {
-            child1[i] = parent1[i];
-            child2[i] = parent2[i];
-            citiesInChild1.add(parent1[i]);
-            citiesInChild2.add(parent2[i]);
-        }
+        int element, indexOfElement;
 
-        // Get the cities of the opposite parent if the child does not already contain them.
-        for (int i = firstPoint; i < secondPoint; i++) {
-            if (!citiesInChild1.contains(parent2[i])) {
-                citiesInChild1.add(parent2[i]);
-                child1[i] = parent2[i];
+        for (int i = 1; i < len; i++) {
+
+            element = Integer.parseInt(child[i - 1].getName());
+
+            if (isLegitimate(parent1, parent1_pos + 1)) {
+                legitimate_city1 = Integer.parseInt(parent1[parent1_pos + 1].getName());
+
+            }else{
+                legitimate_city1 = Integer.parseInt(citiesNotInChild.get(0).getName());
             }
-            if (!citiesInChild2.contains(parent1[i])) {
-                citiesInChild2.add(parent1[i]);
-                child2[i] = parent1[i];
-            }
-        }
 
-        // Find all the cities that are still missing from each child.
-        for (int i = 0; i < totalCities; i++) {
-            if (!citiesInChild1.contains(parent2[i])) {
-                citiesNotInChild1.add(parent2[i]);
+            if (isLegitimate(parent2, parent2_pos +1)) {
+                legitimate_city2 = Integer.parseInt(parent2[parent2_pos + 1].getName());
+            } else {
+                legitimate_city2 = Integer.parseInt(citiesNotInChild.get(0).getName());
             }
-            if (!citiesInChild2.contains(parent1[i])) {
-                citiesNotInChild2.add(parent1[i]);
+            System.out.println("Leg1 => " + legitimate_city1 + "\n leg2 => " + legitimate_city2 + "\n el => " + element);
+            if (Matrix.distances[element][legitimate_city1] >= Matrix.distances[element][legitimate_city2]) {
+                parent1_pos = newParentPosition(parent1, legitimate_city1);
+                parent2_pos = newParentPosition(parent2, legitimate_city1);
+                child[i] = parent1[parent1_pos];
+                indexOfElement = citiesNotInChild.indexOf(child[i]);
+                citiesNotInChild.remove(indexOfElement);
+            } else {
+                parent1_pos = newParentPosition(parent1, legitimate_city2);
+                parent2_pos = newParentPosition(parent2, legitimate_city2);
+                child[i] = parent2[parent2_pos];
+                indexOfElement = citiesNotInChild.indexOf(child[i]);
+                citiesNotInChild.remove(indexOfElement);
             }
         }
+        return new Chromosome(child);
+    }
 
-        // Find which spots are still empty in each child.
-        ArrayList<Integer> emptySpotsC1 = new ArrayList<>();
-        ArrayList<Integer> emptySpotsC2 = new ArrayList<>();
-        for (int i = 0; i < totalCities; i++) {
-            if (child1[i] == null) {
-                emptySpotsC1.add(i);
-            }
-            if (child2[i] == null) {
-                emptySpotsC2.add(i);
-            }
+
+    private boolean isLegitimate(City[] parent, int pos) {
+        if (pos >= len) return false;
+        if (!citiesNotInChild.contains(parent[pos])) return false;
+
+        return true;
+    }
+
+    private int newParentPosition(City[] parent, int legitimateCity) {
+        int newPos = 0;
+        String cityName = Integer.toString(legitimateCity);
+        for (int i = 0; i < len; i++) {
+            if (parent[i].getName().equals(cityName)) newPos = i;
         }
-
-        // Fill in the empty spots.
-        for (City city : citiesNotInChild1) {
-            child1[emptySpotsC1.remove(0)] = city;
-        }
-        for (City city : citiesNotInChild2) {
-            child2[emptySpotsC2.remove(0)] = city;
-        }
-
-        Chromosome childOne = new Chromosome(child1);
-        Chromosome childTwo = new Chromosome(child2);
-        children.add(childOne);
-        children.add(childTwo);
-
-        return children;
+    return newPos;
     }
 
 }
