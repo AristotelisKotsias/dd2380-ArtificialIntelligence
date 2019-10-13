@@ -1,60 +1,83 @@
 package TSP;
+
 import java.util.*;
 
 public class Crossover {
 
-   public Chromosome scx (Chromosome p1, Chromosome p2, City[] city) {
-      City[] parent1 = p1.getArray();
-      City[] parent2 = p2.getArray();
-      City[] child1 = new City[parent1.length];
-      ArrayList<City> citiesNotInChild1 = new ArrayList<>();
-      City ct = new City();
+    City[] parent1;
+    City[] parent2;
+    City[] child;
+    int len;
+    static ArrayList<City> citiesNotInChild;
 
-      int p1_temp = 0;
-      int p2_temp = 0;
-      int next_p1;
-      int next_p2;
+    public Chromosome scx(Chromosome p1, Chromosome p2) {
+        parent1 = p1.getArray();
+        parent2 = p2.getArray();
+        len = parent1.length;
+        child = new City[len];
 
-      for (int i = 0; i < parent1.length; i++) {
-         citiesNotInChild1.add(city[i]);
-      }
+        int legitimate_city1;
+        int legitimate_city2;
+
+        int parent1_pos = newParentPosition(parent1, 1);
+        int parent2_pos = newParentPosition(parent2, 1);
+
+        child[0] = parent1[parent1_pos];
+        citiesNotInChild.remove(0);
+
+        //System.out.println(citiesNotInChild.toString());
+
+        int element, indexOfElement;
+
+        for (int i = 1; i < len; i++) {
+
+            element = Integer.parseInt(child[i - 1].getName());
+
+            if (isLegitimate(parent1, parent1_pos + 1)) {
+                legitimate_city1 = Integer.parseInt(parent1[parent1_pos + 1].getName());
+
+            }else{
+                legitimate_city1 = Integer.parseInt(citiesNotInChild.get(0).getName());
+            }
+
+            if (isLegitimate(parent2, parent2_pos +1)) {
+                legitimate_city2 = Integer.parseInt(parent2[parent2_pos + 1].getName());
+            } else {
+                legitimate_city2 = Integer.parseInt(citiesNotInChild.get(0).getName());
+            }
+            System.out.println("Leg1 => " + legitimate_city1 + "\n leg2 => " + legitimate_city2 + "\n el => " + element);
+            if (Matrix.distances[element][legitimate_city1] >= Matrix.distances[element][legitimate_city2]) {
+                parent1_pos = newParentPosition(parent1, legitimate_city1);
+                parent2_pos = newParentPosition(parent2, legitimate_city1);
+                child[i] = parent1[parent1_pos];
+                indexOfElement = citiesNotInChild.indexOf(child[i]);
+                citiesNotInChild.remove(indexOfElement);
+            } else {
+                parent1_pos = newParentPosition(parent1, legitimate_city2);
+                parent2_pos = newParentPosition(parent2, legitimate_city2);
+                child[i] = parent2[parent2_pos];
+                indexOfElement = citiesNotInChild.indexOf(child[i]);
+                citiesNotInChild.remove(indexOfElement);
+            }
+        }
+        return new Chromosome(child);
+    }
 
 
-      for (int i = 0; i < parent1.length; i++) {
-         if(parent1[i].getName().equals("1")) p1_temp = i;
-         if(parent2[i].getName().equals("1")) p2_temp = i;
-      }
+    private boolean isLegitimate(City[] parent, int pos) {
+        if (pos >= len) return false;
+        if (!citiesNotInChild.contains(parent[pos])) return false;
 
-      child1[0] = parent1[p1_temp];
-      citiesNotInChild1.remove(p1_temp);
-      System.out.println(citiesNotInChild1.toString());
+        return true;
+    }
 
-
-      for (int i = 1; i < parent1.length; i++) {
-         if (p1_temp == parent1.length - 1) {
-
-         }
-
-
-         if (ct.distance())
-
-      }
-
-
-
-
-
-
-      return new Chromosome(child1);
-   }
+    private int newParentPosition(City[] parent, int legitimateCity) {
+        int newPos = 0;
+        String cityName = Integer.toString(legitimateCity);
+        for (int i = 0; i < len; i++) {
+            if (parent[i].getName().equals(cityName)) newPos = i;
+        }
+    return newPos;
+    }
 
 }
-
-
-
-/*    HashSet<City> citiesInChild = new HashSet<>();
-
-      ArrayList<City> citiesNotInChild = new ArrayList<>();
-
-      ArrayList<Chromosome> child = new ArrayList<>();
-      int totalCities = parent1.length;*/
