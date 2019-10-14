@@ -16,7 +16,7 @@ public class Population implements Iterable<Chromosome> {
      */
     public Population (int maxSize) {
         this.maxSize = maxSize;
-        chromosomes = new PriorityQueue<>();
+        chromosomes = new PriorityQueue<>(maxSize);
     }
 
     /**
@@ -24,10 +24,50 @@ public class Population implements Iterable<Chromosome> {
      * @param chromosome        the chromosome to add
      */
     public void add (Chromosome chromosome) {
-        if (chromosomes.size() == maxSize) {
+      /* if (chromosomes.size() == maxSize) {
             throw new BufferOverflowException();
-        }
+       }*/
         chromosomes.add(chromosome);
+    }
+
+//    public Chromosome[] getChromosomes () {
+//        Chromosome[] array = new Chromosome[maxSize];
+//
+//        int i = 0;
+//        //for (Chromosome chromo : chromosomes) {
+//        for (int j = 0; j < maxSize; j++) {
+//            array[i++] = chromosomes.peek();
+//        }
+//
+//        return array;
+//    }
+
+    public Chromosome[] getChromosomes () {
+        Chromosome[] array = new Chromosome[chromosomes.size()];
+
+        int i = 0;
+        for (Chromosome chromo : chromosomes) {
+            array[i++] = chromo;
+        }
+
+        return array;
+    }
+
+    public void populate (City[] cities, Random random) {
+
+        HashSet<Chromosome> hashSet = new HashSet<>();
+
+        while (chromosomes.size() < maxSize) {
+            Chromosome chromosome = new Chromosome(cities, random);
+            if (!hashSet.contains(chromosome)) {
+                hashSet.add(chromosome);
+                add(chromosome);
+            }
+        }
+    }
+
+    public void clear () {
+        chromosomes.clear();
     }
 
     @Override
