@@ -14,7 +14,7 @@ public class GeneticAlgorithm {
     double bestDistanceLastGen;
     double averageDistanceZeroGen;
     double averageDistanceLastGen;
-    Input.DataSet file = Input.DataSet.berlin52;
+    Input.DataSet file = Input.DataSet.burma14;
 
     public void initialization () {
         Input in = new Input();
@@ -23,7 +23,22 @@ public class GeneticAlgorithm {
         NextGen ng = new NextGen(pop);
         Matrix.populate_matrix(in.getCities(file));
 
-        //Create generation zero with chromosomes
+        OX ox = new OX();
+        Chromosome chr1 = new Chromosome(in.getCities(file), new Random());
+        Chromosome chr2 = new Chromosome(in.getCities(file), new Random());
+
+
+        System.out.println("parent 1 " + chr1.toString() + "\nparent 2 " + chr2.toString());
+        ArrayList<Chromosome> arr = new ArrayList<>();
+        arr = ox.orderCrossover(chr1,chr2,new Random());
+        System.out.println("children");
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println("child " + i + " " + arr.get(i));
+
+        }
+
+
+        /*//Create generation zero with chromosomes
         pop.populate(in.getCities(file), new Random());
 
         for (int i = 0; i < generations; i++) {
@@ -38,6 +53,6 @@ public class GeneticAlgorithm {
             }
         }
         System.out.println("First " + bestDistanceZeroGen + "\nLast " + bestDistanceLastGen);
-        System.out.println("AverageFirst " + averageDistanceZeroGen + "\nAverageLast " + averageDistanceLastGen);
+        System.out.println("AverageFirst " + averageDistanceZeroGen + "\nAverageLast " + averageDistanceLastGen);*/
     }
 }
