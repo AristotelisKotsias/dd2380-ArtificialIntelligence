@@ -1,33 +1,60 @@
 package TSP;
 
-
-import java.nio.BufferOverflowException;
 import java.util.*;
-
 
 public class Population implements Iterable<Chromosome> {
 
     private PriorityQueue<Chromosome> chromosomes;
     private int maxSize;
 
-    /**
-     * Constructs an empty population with a maximum size.
-     * @param maxSize  the maximum size of the Population
-     */
     public Population (int maxSize) {
         this.maxSize = maxSize;
-        chromosomes = new PriorityQueue<>();
+        chromosomes = new PriorityQueue<>(maxSize);
     }
 
-    /**
-     * Adds a Chromosome to the Population.
-     * @param chromosome        the chromosome to add
-     */
     public void add (Chromosome chromosome) {
-        if (chromosomes.size() == maxSize) {
-            throw new BufferOverflowException();
-        }
         chromosomes.add(chromosome);
+    }
+
+    public double getFittest() {
+        return chromosomes.peek().getDistance();
+    }
+
+    public double getAverageDistances(){
+        double sum = 0;
+        for(Chromosome chromo : chromosomes){
+            sum += chromo.getDistance();
+        }
+
+        return sum/chromosomes.size();
+    }
+
+    public Chromosome[] getChromosomes () {
+        Chromosome[] array = new Chromosome[chromosomes.size()];
+
+        int i = 0;
+        for (Chromosome chromo : chromosomes) {
+            array[i++] = chromo;
+        }
+
+        return array;
+    }
+
+    public void populate (City[] cities, Random random) {
+
+        HashSet<Chromosome> hashSet = new HashSet<>();
+
+        while (chromosomes.size() < maxSize) {
+            Chromosome chromosome = new Chromosome(cities, random);
+            if (!hashSet.contains(chromosome)) {
+                hashSet.add(chromosome);
+                add(chromosome);
+            }
+        }
+    }
+
+    public void clear () {
+        chromosomes.clear();
     }
 
     @Override
