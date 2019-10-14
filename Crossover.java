@@ -25,7 +25,7 @@ public class Crossover {
         int parent2_pos = newParentPosition(parent2, 1);
 
         child[0] = parent1[parent1_pos];
-       // System.out.println(Arrays.toString(citiesNotInChildCloned.toArray()));
+        //System.out.println(Arrays.toString(citiesNotInChildCloned.toArray()));
         citiesNotInChildCloned.remove(0);
 
         //System.out.println(citiesNotInChild.toString());

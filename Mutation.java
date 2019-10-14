@@ -5,10 +5,17 @@ public class Mutation {
     public Chromosome mutate(Chromosome chromosome){
         City [] cities = chromosome.getArray();
         int len = cities.length;
-        int fromIndex = (int) (Math.random()*len);
-        int toIndex = (int) (Math.random()*len);
-
-        swap(cities, fromIndex, toIndex);
+        int index1 = (int) (Math.random()*len);
+        int index2 = (int) (Math.random()*len);
+        int index3 = (int) (Math.random()*len);
+        int index4 = (int) (Math.random()*len);
+        int index5 = (int) (Math.random()*len);
+        int index6 = (int) (Math.random()*len);
+        //System.out.println("Distance before mut => " + chromosome.getDistance());
+        swap(cities, index1, index2);
+        swap(cities, index3, index4);
+        swap(cities, index5, index6);
+        //System.out.println("Distance after mut => " + (new Chromosome(cities)).getDistance());
 
         return new Chromosome(cities);
     }

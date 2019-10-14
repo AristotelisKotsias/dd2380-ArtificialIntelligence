@@ -92,6 +92,37 @@ public class Chromosome implements Comparable<Chromosome> {
     }
 
     @Override
+    public String toString () {
+        StringBuilder sb = new StringBuilder("[ ");
+        for (City item : cities) {
+            sb.append(item.getName());
+            sb.append(" ");
+        }
+        sb.append("]");
+        return new String(sb);
+    }
+
+    @Override
+    public int hashCode() {
+        StringBuilder sb = new StringBuilder();
+        for (City city : cities) {
+            sb.append(city);
+        }
+        return (new String(sb)).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Chromosome)) {
+            return false;
+        }
+
+        Chromosome c = (Chromosome) o;
+
+        return Arrays.equals(c.cities, cities);
+    }
+
+    @Override
     public int compareTo(Chromosome chromosome) {
         return getDistance() - chromosome.getDistance();
     }

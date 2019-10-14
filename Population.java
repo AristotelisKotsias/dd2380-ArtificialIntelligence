@@ -1,46 +1,33 @@
 package TSP;
 
-
-import java.nio.BufferOverflowException;
 import java.util.*;
-
 
 public class Population implements Iterable<Chromosome> {
 
     private PriorityQueue<Chromosome> chromosomes;
     private int maxSize;
 
-    /**
-     * Constructs an empty population with a maximum size.
-     * @param maxSize  the maximum size of the Population
-     */
     public Population (int maxSize) {
         this.maxSize = maxSize;
         chromosomes = new PriorityQueue<>(maxSize);
     }
 
-    /**
-     * Adds a Chromosome to the Population.
-     * @param chromosome        the chromosome to add
-     */
     public void add (Chromosome chromosome) {
-      /* if (chromosomes.size() == maxSize) {
-            throw new BufferOverflowException();
-       }*/
         chromosomes.add(chromosome);
     }
 
-//    public Chromosome[] getChromosomes () {
-//        Chromosome[] array = new Chromosome[maxSize];
-//
-//        int i = 0;
-//        //for (Chromosome chromo : chromosomes) {
-//        for (int j = 0; j < maxSize; j++) {
-//            array[i++] = chromosomes.peek();
-//        }
-//
-//        return array;
-//    }
+    public double getFittest() {
+        return chromosomes.peek().getDistance();
+    }
+
+    public double getAverageDistances(){
+        double sum = 0;
+        for(Chromosome chromo : chromosomes){
+            sum += chromo.getDistance();
+        }
+
+        return sum/chromosomes.size();
+    }
 
     public Chromosome[] getChromosomes () {
         Chromosome[] array = new Chromosome[chromosomes.size()];
