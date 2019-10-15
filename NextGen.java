@@ -8,16 +8,16 @@ public class NextGen {
     HashSet<Chromosome> chromoHashSet;
     Mutation mutation = new Mutation();
     int prob_crossover = 90;
-    double prob_mutations = 1;
+    double prob_mutations = 4;
+    boolean isSCX;
 
     Crossover cr = new Crossover();
+    OX ox = new OX();
     Chromosome [] previousGeneration;
 
     private int lenOfPQ;
 
-    public NextGen(Population pop) {
-        this.pop = pop;
-    }
+    public NextGen(Population pop) { this.pop = pop; }
 
     public void createGen() {
         previousGeneration = pop.getChromosomes();
@@ -36,6 +36,7 @@ public class NextGen {
         for (int i = 0; i < lenOfPQ; i+=2) {
             if ((Math.random()*100)<prob_crossover){
 
+
                 child = cr.scx(previousGeneration[i], previousGeneration[i+1]);
                 // (int)(Math.random()*lenOfPQ)
                 if (!chromoHashSet.contains(child)) {
@@ -44,6 +45,58 @@ public class NextGen {
                 }
             }
         }
+
+        pop.clear();
+        for (int i = 0; i < lenOfPQ; i++) {
+            if((Math.random()*100)<prob_mutations){
+                //mutate
+                pop.add(mutation.mutate(nextGeneration.poll()));
+            }else{
+                pop.add(nextGeneration.poll());
+            }
+        }
+
+        nextGeneration.clear();
+    }
+
+    public void createGenOX() {
+        previousGeneration = pop.getChromosomes();
+        chromoHashSet = new HashSet<>();
+        lenOfPQ = previousGeneration.length;
+
+        ArrayList<Chromosome> childs;
+
+
+        //System.out.println("Previous gen: " + Arrays.toString(previousGeneration));
+
+
+        for (int i = 0; i < lenOfPQ; i++) {
+            if (!chromoHashSet.contains(previousGeneration[i])) {
+                chromoHashSet.add(previousGeneration[i]);
+                nextGeneration.add(previousGeneration[i]);
+            }
+        }
+
+        for (int i = 0; i < lenOfPQ; i+=2) {
+            if ((Math.random()*100)<prob_crossover){
+
+
+                childs = ox.orderCrossover(previousGeneration[i], previousGeneration[i+1], new Random());
+                if (!chromoHashSet.contains(childs.get(0))) {
+                    chromoHashSet.add(childs.get(0));
+                    nextGeneration.add(childs.get(0));
+                }
+
+                if (!chromoHashSet.contains(childs.get(1))) {
+                    chromoHashSet.add(childs.get(1));
+                    nextGeneration.add(childs.get(1));
+                }
+            }
+        }
+
+        //System.out.println("Children " + chromoHashSet.toString());
+        //System.out.println("next gen " + nextGeneration.toString());
+
 
         pop.clear();
         for (int i = 0; i < lenOfPQ; i++) {

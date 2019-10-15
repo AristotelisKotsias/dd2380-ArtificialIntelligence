@@ -66,10 +66,10 @@ public class OX {
 
 
 
-        System.out.println("first point " + firstPoint + "\nsecond point " + secondPoint);
+        /*System.out.println("first point " + firstPoint + "\nsecond point " + secondPoint);
 
         System.out.println("Child 1 " + Arrays.toString(child1));
-        System.out.println("Child 2 " + Arrays.toString(child2));
+        System.out.println("Child 2 " + Arrays.toString(child2));*/
 
 
         Chromosome chr1 = new Chromosome(child1);
@@ -77,8 +77,8 @@ public class OX {
         Chromosome chr2 = new Chromosome(child2);
         children.add(chr2);
 
-        System.out.println("Chromo 1 " + chr1.toString());
-        System.out.println("Chromo 2 " + chr2.toString());
+        //System.out.println("Chromo 1 " + chr1.toString());
+        //System.out.println("Chromo 2 " + chr2.toString());
 
         return children;
 
