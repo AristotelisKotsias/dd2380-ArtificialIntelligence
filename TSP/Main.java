@@ -1,14 +1,16 @@
 package TSP;
 
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
-        Input.DataSet file = Input.DataSet.att48;
-        int population = 100;
-        int generations = 500;
-        int prob_crossover = 90;
-        int prob_mutation = 10;
+    public static void main(String[] args) throws IOException {
+        Input.DataSet file = Input.DataSet.berlin52;
+        int population = 10000;
+        int generations = 200;
+        int prob_crossover = 100;
+        int prob_mutation = 20;
         boolean isOX = true;
 
         GeneticAlgorithm ga = new GeneticAlgorithm(file, population, generations, prob_crossover, prob_mutation, isOX);
