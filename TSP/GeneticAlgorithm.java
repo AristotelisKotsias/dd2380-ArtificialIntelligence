@@ -8,8 +8,8 @@ import static TSP.Crossover.*;
 
 public class GeneticAlgorithm {
 
-    int population = 10;
-    int generations = 10;
+    int population = 10000;
+    int generations = 200;
     double bestDistanceZeroGen;
     double bestDistanceLastGen;
     double averageDistanceZeroGen;

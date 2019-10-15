@@ -7,8 +7,8 @@ public class NextGen {
     private PriorityQueue<Chromosome> nextGeneration = new PriorityQueue<>();
     HashSet<Chromosome> chromoHashSet;
     Mutation mutation = new Mutation();
-    int prob_crossover = 90;
-    double prob_mutations = 4;
+    int prob_crossover = 30;
+    double prob_mutations = 100;
     boolean isSCX;
 
     Crossover cr = new Crossover();
