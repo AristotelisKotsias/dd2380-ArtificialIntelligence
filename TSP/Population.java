@@ -53,6 +53,8 @@ public class Population implements Iterable<Chromosome> {
         }
     }
 
+
+
     public void clear () {
         chromosomes.clear();
     }
