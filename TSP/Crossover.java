@@ -49,7 +49,7 @@ public class Crossover {
                 legitimate_city2 = Integer.parseInt(citiesNotInChildCloned.get(0).getName());
             }
             //System.out.println("Leg1 => " + legitimate_city1 + "\n leg2 => " + legitimate_city2 + "\n el => " + element);
-            if (Matrix.distances[element][legitimate_city1] >= Matrix.distances[element][legitimate_city2]) {
+            if (Matrix.distances[element][legitimate_city1] <= Matrix.distances[element][legitimate_city2]) {
                 parent1_pos = newParentPosition(parent1, legitimate_city1);
                 parent2_pos = newParentPosition(parent2, legitimate_city1);
                 child[i] = parent1[parent1_pos];
