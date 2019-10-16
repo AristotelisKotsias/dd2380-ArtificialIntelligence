@@ -48,7 +48,7 @@ public class GeneticAlgorithm {
         pop.populate(in.getGenes(file), new Random());
 
         for (int i = 0; i < generations; i++) {
-            System.out.println(pop.toString());
+            System.out.println(pop.toString()+" "+ i);
 
             if (i == 0) {
                 bestDistanceZeroGen = pop.getFittest();
@@ -73,7 +73,7 @@ public class GeneticAlgorithm {
         }
 
         //File name convention best_crossovertype_dataset_pop_gen_numberOfTest.csv
-        FileWriter csvWriter0 = new FileWriter("best_scx_bier127_10000_500_2.csv");
+        FileWriter csvWriter0 = new FileWriter("best_ox_a280_10000_500_1.csv");
         csvWriter0.append("Best of each generation,");
         csvWriter0.append("\n");
         csvWriter0.append(bestDistanceZeroGen + " ,");
@@ -87,7 +87,7 @@ public class GeneticAlgorithm {
         csvWriter0.flush();
         csvWriter0.close();
 
-        FileWriter csvWriter = new FileWriter("average_scx_bier127_10000_500_2.csv");
+        FileWriter csvWriter = new FileWriter("average_ox_a280_10000_500_1.csv");
         csvWriter.append("Average distance,");
         csvWriter.append("\n");
         csvWriter.append(averageDistanceZeroGen + " ,");

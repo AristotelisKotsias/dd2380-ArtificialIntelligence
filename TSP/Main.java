@@ -11,7 +11,7 @@ public class Main {
         int generations = 10;
         int prob_crossover = 90;
         int prob_mutation = 1;
-        boolean isOX = true;
+        boolean isOX = false;
 
         GeneticAlgorithm ga = new GeneticAlgorithm(file, population, generations, prob_crossover, prob_mutation, isOX);
         ga.initialization();
