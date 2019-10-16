@@ -37,17 +37,17 @@ public class Input {
         String[] lines = read(dataSetName).split("\n");
         String[] words = lines[3].split(" ");
         int numOfCities = Integer.parseInt(words[words.length - 1]);
-        Gene[] cities = new Gene[numOfCities];
+        Gene[] genes = new Gene[numOfCities];
 
         for (int i = startingLine; i < startingLine + numOfCities; i++) {
             String[] line = removeWhiteSpace(lines[i]).trim().split(" ");
             int x = (int) Math.round(Double.parseDouble(line[1].trim()));
             int y = (int) Math.round(Double.parseDouble(line[2].trim()));
             Gene gene = new Gene(line[0], x, y);
-            cities[i - startingLine] = gene;
+            genes[i - startingLine] = gene;
         }
 
-        return cities;
+        return genes;
     }
 
     private static String removeWhiteSpace(String s) {
