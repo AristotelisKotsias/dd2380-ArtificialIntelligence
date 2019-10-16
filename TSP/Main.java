@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Input.DataSet file = Input.DataSet.berlin52;
+        Input.DataSet file = Input.DataSet.bier127;
         int population = 10;
         int generations = 10;
         int prob_crossover = 90;

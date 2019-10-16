@@ -14,17 +14,8 @@ public class Input {
         String dataSetName;
         int startingLine;
 
-        if (dataSet == DataSet.burma14) {
-            dataSetName = "burma14.tsp";
-            startingLine = 8;
-        } else if (dataSet == DataSet.bays29) {
-            dataSetName = "bays29.tsp";
-            startingLine = 38;
-        } else if (dataSet == DataSet.bier127) {
+        if (dataSet == DataSet.bier127) {
             dataSetName = "bier127.tsp";
-            startingLine = 6;
-        } else if (dataSet == DataSet.att48) {
-            dataSetName = "att48.tsp";
             startingLine = 6;
         } else if (dataSet == DataSet.a280) {
             dataSetName = "a280.tsp";
@@ -72,9 +63,6 @@ public class Input {
     }
 
     public enum DataSet {
-        burma14,
-        att48,
-        bays29,
         a280,
         bier127,
         berlin52
