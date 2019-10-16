@@ -27,15 +27,13 @@ public class Gene {
     public static double distance (Gene gene1, Gene gene2) {
 
         int x1 = gene1.getX();
-        int y1 = gene1.getY();
-
         int x2 = gene2.getX();
+        int y1 = gene1.getY();
         int y2 = gene2.getY();
+        int xx = x2 - x1;
+        int yy = y2 - y1;
 
-        int xDiff = x2 - x1;
-        int yDiff = y2 - y1;
-
-        return Math.sqrt(xDiff*xDiff + yDiff*yDiff);
+        return Math.sqrt(xx*xx + yy*yy);
     }
 
     @Override
