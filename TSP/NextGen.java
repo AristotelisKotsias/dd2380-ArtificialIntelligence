@@ -24,6 +24,8 @@ public class NextGen {
 
     public void createGenSCX() {
         previousGeneration = pop.getChromosomes();
+
+        //HashSet that is used in order to maintain uniqueness of the generation (duplicates should no exist)
         chromoHashSet = new HashSet<>();
         lenOfPQ = previousGeneration.length;
 
@@ -37,18 +39,19 @@ public class NextGen {
         }
 
         for (int i = 0; i < lenOfPQ; i+=2) {
+            //Checks if the chromosomes should be crossovered according to given crossover percentage
             if ((Math.random()*100)<prob_crossover){
 
-
+                //Crossover two parents and create a child
                 child = cr.scx(previousGeneration[i], previousGeneration[i+1]);
-                // (int)(Math.random()*lenOfPQ)
+                //add chromosome if it's not already included in the current generation
                 if (!chromoHashSet.contains(child)) {
                     chromoHashSet.add(child);
                     nextGeneration.add(child);
                 }
             }
         }
-
+        //Delete previous generation and store current generation in order to continue the process
         pop.clear();
         for (int i = 0; i < lenOfPQ; i++) {
             if((Math.random()*100)<prob_mutations){

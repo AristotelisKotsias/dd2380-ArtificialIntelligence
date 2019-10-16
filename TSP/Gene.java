@@ -6,22 +6,22 @@ import java.util.Random;
  * Represents a city in the Traveling Salesman Problem.
  * Immutable.
  */
-public class City {
+public class Gene {
 
     private String name;
     private int x, y;
 
 
-    public City(){
+    public Gene(){
 
     }
     /**
-     * Constructs the City.
+     * Constructs the Gene.
      * @param name  the name of the city
      * @param x     the x coordinate
      * @param y     the y coordinate
      */
-    public City (String name, int x, int y) {
+    public Gene(String name, int x, int y) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -40,19 +40,19 @@ public class City {
     }
 
     /**
-     * Create a City with a random name and random location.
+     * Create a Gene with a random name and random location.
      * @param random    the Random object to be used for the generation
-     * @return          a Randomly generated City
+     * @return          a Randomly generated Gene
      */
-    public static City getRandomCity (Random random) {
+    public static Gene getRandomCity (Random random) {
         String name = getRandomName(random);
         int x = random.nextInt(500);
         int y = random.nextInt(500);
-        return new City(name, x, y);
+        return new Gene(name, x, y);
     }
 
     /**
-     * Helper method to generate a random name for the random City generator.
+     * Helper method to generate a random name for the random Gene generator.
      * @param random    the Random object to be used for the generation
      * @return          random letters
      */
@@ -76,17 +76,17 @@ public class City {
 
     /**
      * Finds the Euclidean distance between two cities.
-     * @param city1     the first city
-     * @param city2     the second city
+     * @param gene1     the first city
+     * @param gene2     the second city
      * @return          the distance
      */
-    public static double distance (City city1, City city2) {
+    public static double distance (Gene gene1, Gene gene2) {
 
-        int x1 = city1.getX();
-        int y1 = city1.getY();
+        int x1 = gene1.getX();
+        int y1 = gene1.getY();
 
-        int x2 = city2.getX();
-        int y2 = city2.getY();
+        int x2 = gene2.getX();
+        int y2 = gene2.getY();
 
         int xDiff = x2 - x1;
         int yDiff = y2 - y1;
@@ -99,11 +99,11 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        City city = (City) o;
+        Gene gene = (Gene) o;
 
-        if (x != city.x) return false;
-        if (y != city.y) return false;
-        return name.equals(city.name);
+        if (x != gene.x) return false;
+        if (y != gene.y) return false;
+        return name.equals(gene.name);
 
     }
 

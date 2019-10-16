@@ -16,8 +16,8 @@ public class GeneticAlgorithm {
     private double bestDistanceLastGen;
     private double averageDistanceZeroGen;
     private double averageDistanceLastGen;
-    private  ArrayList<Double> averageDistanceEachGen = new ArrayList<>();
-    private  ArrayList<Double> bestDistanceEachGen = new ArrayList<>();
+    private ArrayList<Double> averageDistanceEachGen = new ArrayList<>();
+    private ArrayList<Double> bestDistanceEachGen = new ArrayList<>();
     private Input.DataSet file;
     private boolean isOX;
 
@@ -30,30 +30,22 @@ public class GeneticAlgorithm {
         this.isOX = isOX;
     }
 
+    /**
+     * Initializes generation 0 and runs until generation limit
+     * @throws IOException
+     */
     public void initialization () throws IOException {
         Input in = new Input();
-        citiesNotInChild = new ArrayList<>(Arrays.asList(in.getCities(file)));
+
+        //Fill the arraylist with all the genes
+        geneNotInChild = new ArrayList<>(Arrays.asList(in.getGenes(file)));
         Population pop = new Population(population);
         NextGen ng = new NextGen(pop, prob_crossover, prob_mutation);
-        Matrix.populate_matrix(in.getCities(file));
-
-        /*Ox ox = new Ox();
-        Chromosome chr1 = new Chromosome(in.getCities(file), new Random());
-        Chromosome chr2 = new Chromosome(in.getCities(file), new Random());
-
-
-        System.out.println("parent 1 " + chr1.toString() + "\nparent 2 " + chr2.toString());
-        ArrayList<Chromosome> arr = new ArrayList<>();
-        arr = ox.orderCrossover(chr1,chr2,new Random());
-        System.out.println("children");
-        for (int i = 0; i < arr.size(); i++) {
-            System.out.println("child " + i + " " + arr.get(i));
-
-        }*/
+        Matrix.populate_matrix(in.getGenes(file));
 
 
         //Create generation zero with chromosomes
-        pop.populate(in.getCities(file), new Random());
+        pop.populate(in.getGenes(file), new Random());
 
         for (int i = 0; i < generations; i++) {
             System.out.println(pop.toString());
@@ -63,6 +55,7 @@ public class GeneticAlgorithm {
                 averageDistanceZeroGen = pop.getAverageDistances();
             }
 
+            //Choose between OX and SCX crossover operator
             if (isOX)
                 ng.createGenOX();
             else
@@ -80,8 +73,7 @@ public class GeneticAlgorithm {
         }
 
         //File name convention best_crossovertype_dataset_pop_gen_numberOfTest.csv
-
-        FileWriter csvWriter0 = new FileWriter("best_scx_bays29_500_10000_1.csv");
+        FileWriter csvWriter0 = new FileWriter("best_scx_bier127_10000_500_2.csv");
         csvWriter0.append("Best of each generation,");
         csvWriter0.append("\n");
         csvWriter0.append(bestDistanceZeroGen + " ,");
@@ -95,7 +87,7 @@ public class GeneticAlgorithm {
         csvWriter0.flush();
         csvWriter0.close();
 
-        FileWriter csvWriter = new FileWriter("average_scx_bays29_500_10000_1.csv");
+        FileWriter csvWriter = new FileWriter("average_scx_bier127_10000_500_2.csv");
         csvWriter.append("Average distance,");
         csvWriter.append("\n");
         csvWriter.append(averageDistanceZeroGen + " ,");
@@ -109,6 +101,8 @@ public class GeneticAlgorithm {
         csvWriter.flush();
         csvWriter.close();
 
+
+        //Printing for testing purposes
         System.out.println("First " + bestDistanceZeroGen + "\nLast " + bestDistanceLastGen);
         System.out.println("AverageFirst " + averageDistanceZeroGen + "\nAverageLast " + averageDistanceLastGen);
 
