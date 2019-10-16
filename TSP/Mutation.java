@@ -1,5 +1,7 @@
 package TSP;
 
+import java.util.Random;
+
 public class Mutation {
 
     public Chromosome mutate(Chromosome chromosome){
