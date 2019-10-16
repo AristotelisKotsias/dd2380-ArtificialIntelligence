@@ -3,79 +3,38 @@ import java.util.*;
 
 public class Chromosome implements Comparable<Chromosome> {
 
-    private City[] cities;
-    private int distance = -1; // Calculated once then cached.
+    private Gene[] cities;
+    private int distance = -1;
     private Random random;
 
-    /*public Chromosome(Chromosome chr) {
-        City [] temp = chr.cities;
-        City last = temp[temp.length -1];
-        this.cities = new City[temp.length];
-        this.cities[0] = last;
-        int j = 1;
-        for (int i = 0; i < cities.length -1; i++) {
-            this.cities[j] = temp[i];
-            j++;
-        }
-    }*/
-
-
-    public Chromosome (City[] cities) {
+    public Chromosome (Gene[] cities) {
         this.cities = cities.clone();
     }
 
-    /**
-     * Construct the Chromosome from an array of City objects and shuffle them.
-     * @param cities    the array of City objects for construction
-     * @param random    the Random object for shuffling the Chromosome
-     */
-
-
-    public Chromosome (City[] cities, Random random) {
+    public Chromosome (Gene[] cities, Random random) {
         this.cities = cities.clone();
         this.random = random;
         shuffle();
     }
 
-
-    /**
-     * Shuffles the cities in the Chromosome.
-     */
-    private void shuffle1 () {
-        for (int i = 1; i < cities.length; i++) {
-            swap(i, random.nextInt(cities.length-1)+1);
-        }
-    }
-
-    /**
-     * Shuffles the cities in the Chromosome.
-     */
-    private void shuffle () {
+    public void shuffle () {
         for (int i = 0; i < cities.length; i++) {
             swap(i, random.nextInt(cities.length));
         }
     }
 
-    /**
-     * Helper method for shuffling the cities. Swaps two cities.
-     * @param i     the index of the first city
-     * @param j     the index of the second city
-     */
     private void swap (int i, int j) {
-        City temp = cities[i];
+        Gene temp = cities[i];
         cities[i] = cities[j];
         cities[j] = temp;
     }
 
-
-
-    public City[] getArray () {
+    public Gene[] getArray () {
         return cities.clone();
     }
 
     public int getDistance () {
 
-        // If this was already calculated, don't calculate it again.
         if (distance != -1) {
             return distance;
         }
@@ -83,10 +42,10 @@ public class Chromosome implements Comparable<Chromosome> {
         double distanceTravelled = 0;
 
         for (int i = 1; i < cities.length; i++) {
-            distanceTravelled += City.distance(cities[i-1], cities[i]);
+            distanceTravelled += Gene.distance(cities[i-1], cities[i]);
         }
 
-        distanceTravelled += City.distance(cities[cities.length-1], cities[0]);
+        distanceTravelled += Gene.distance(cities[cities.length-1], cities[0]);
         this.distance = (int)distanceTravelled;
         return distance;
     }
@@ -94,7 +53,7 @@ public class Chromosome implements Comparable<Chromosome> {
     @Override
     public String toString () {
         StringBuilder sb = new StringBuilder("[ ");
-        for (City item : cities) {
+        for (Gene item : cities) {
             sb.append(item.getName());
             sb.append(" ");
         }
@@ -105,8 +64,8 @@ public class Chromosome implements Comparable<Chromosome> {
     @Override
     public int hashCode() {
         StringBuilder sb = new StringBuilder();
-        for (City city : cities) {
-            sb.append(city);
+        for (Gene gene : cities) {
+            sb.append(gene);
         }
         return (new String(sb)).hashCode();
     }

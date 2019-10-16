@@ -2,8 +2,13 @@ package TSP;
 
 public class Mutation {
 
+    /**
+     *
+     * @param chromosome chosen chromosome that needs to be mutated
+     * @return a new chromosome that has 6 of its genes randomly swapped
+     */
     public Chromosome mutate(Chromosome chromosome){
-        City [] cities = chromosome.getArray();
+        Gene[] cities = chromosome.getArray();
         int len = cities.length;
         int index1 = (int) (Math.random()*len);
         int index2 = (int) (Math.random()*len);
@@ -20,8 +25,8 @@ public class Mutation {
         return new Chromosome(cities);
     }
 
-    private static void swap (City[] cities, int i, int j) {
-        City temp = cities[i];
+    private static void swap (Gene[] cities, int i, int j) {
+        Gene temp = cities[i];
         cities[i] = cities[j];
         cities[j] = temp;
     }

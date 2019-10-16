@@ -3,7 +3,7 @@ package TSP;
 import java.util.*;
 
 public class Population implements Iterable<Chromosome> {
-
+    //Priority queue is used to order the chromosomes in ascending order and pick the fittest when needed
     private PriorityQueue<Chromosome> chromosomes;
     private int maxSize;
 
@@ -40,7 +40,7 @@ public class Population implements Iterable<Chromosome> {
         return array;
     }
 
-    public void populate (City[] cities, Random random) {
+    public void populate (Gene[] cities, Random random) {
 
         HashSet<Chromosome> hashSet = new HashSet<>();
 
@@ -52,8 +52,6 @@ public class Population implements Iterable<Chromosome> {
             }
         }
     }
-
-
 
     public void clear () {
         chromosomes.clear();
